@@ -6,22 +6,18 @@ const subjectivity = document.getElementById('subjectivity');
 const score = document.getElementById('score');
 
 //Main function
-async function handleSubmit(event) {
+function handleSubmit(event) {
   event.preventDefault()
 
   let userURL = document.getElementById('url').value;
-  Client.checkURL(userURL)
+
 
   console.log(" Form Submitted ")
-  .then(function (data) {
-    postData('/article', {
-        confidence: data.confidence,
-        subjectivity: data.subjectivity,
-        score: data.subjectivity,
+  postData(userURL)
+    .then(function(data) {
+      updateUI(data);
     })
-    updateUI();
-}); 
-}
+  }
 
 const postData = async(url = '') => {
   const response = await fetch('http://localhost:8081/test', {
@@ -72,4 +68,4 @@ function polarityScore(score) {
 }
 
 
-export { handleSubmit, polarityScore };
+export { handleSubmit, polarityScore }
